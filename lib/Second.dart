@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter3/provider/count_provider.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 class Second extends StatefulWidget {
   const Second({Key? key}) : super(key: key);
@@ -37,6 +39,8 @@ class _SecondState extends State<Second> {
 
   @override
   Widget build(BuildContext context) {
+    CountProvider c = Provider.of<CountProvider>(context);
+    txc.text = c.count.toString();
     return Scaffold(
       appBar: AppBar(),
       body: Column(

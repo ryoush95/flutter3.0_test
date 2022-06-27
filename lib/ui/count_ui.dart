@@ -33,10 +33,15 @@ class Count extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                ChangeNotifierProvider(
-                  create: (_) => CountProvider(),
-                  child: Second(),
-                );
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) {
+                  return const Second();
+                  // return ChangeNotifierProvider<CountProvider>.value(
+                  //   value: CountProvider(),
+                  //   // create: (_) => CountProvider(),
+                  //   child: Second(),
+                  // );
+                }));
               },
               child: const Text('second'),
             ),

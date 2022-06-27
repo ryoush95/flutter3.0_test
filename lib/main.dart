@@ -6,6 +6,7 @@ import 'package:flutter3/provider/count_provider.dart';
 import 'package:flutter3/Second.dart';
 import 'package:flutter3/firebase_options.dart';
 import 'package:flutter3/provider/movie_provider.dart';
+import 'package:flutter3/ui/movie_detail_ui.dart';
 import 'package:flutter3/ui/movie_ui.dart';
 import 'package:flutter3/provider/bottom_navi_provider.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,14 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => CountProvider()),
+      ChangeNotifierProvider(create: (_) => BottomNaviProvider()),
+      ChangeNotifierProvider(create: (_) => MovieProvider()),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -33,16 +41,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MultiProvider(providers: [
-          ChangeNotifierProvider(
-              create: (_) => CountProvider()),
-          ChangeNotifierProvider(
-              create: (_) => BottomNaviProvider()),
-          ChangeNotifierProvider(
-              create: (_) => MovieProvider()),
-        ],
-          child: const pTest(),
-        ));
+        home: const pTest());
   }
 }
 
@@ -51,7 +50,6 @@ class pTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CountProvider c = Provider.of<CountProvider>(context);
     BottomNaviProvider bottom = Provider.of<BottomNaviProvider>(context);
 
     Widget _NavigationBody() {

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter3/provider/count_provider.dart';
+import 'package:flutter3/thirth.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
@@ -39,14 +40,22 @@ class _SecondState extends State<Second> {
 
   @override
   Widget build(BuildContext context) {
-    CountProvider c = Provider.of<CountProvider>(context);
-    txc.text = c.count.toString();
+    txc.text = context.watch<CountProvider>().count.toString();
     return Scaffold(
       appBar: AppBar(),
       body: Column(
         children: [
           TextField(
             controller: txc,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.read<CountProvider>().plus();
+              Navigator.push(context, MaterialPageRoute(builder: (context){
+                return Thirth();
+              }));
+            },
+            child: const Text('up'),
           ),
           ElevatedButton(
               onPressed: () {

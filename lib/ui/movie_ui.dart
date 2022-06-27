@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter3/provider/movie_provider.dart';
+import 'package:flutter3/ui/movie_detail_ui.dart';
 import 'package:provider/provider.dart';
 
-import '../movie_model.dart';
+import '../data/movie_model.dart';
 
 class Movie extends StatelessWidget {
   const Movie({Key? key}) : super(key: key);
@@ -13,39 +14,49 @@ class Movie extends StatelessWidget {
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            height: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              color: Colors.white,
-            ),
-            child: Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),                ),
-                  child: Image.network(
-                      'https://image.tmdb.org/t/p/w500${list[index].posterPath}'),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Text(list[index].title,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            )),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Expanded(child: Text(list[index].overview))
-                      ],
+          child: GestureDetector(
+            onTap: () {
+              // Get.to(MovieDetail());
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return MovieDetail( movieId: list[index].id);
+              }));
+            },
+            child: Container(
+              height: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                color: Colors.white,
+              ),
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                    ),
+                    child: Image.network(
+                        'https://image.tmdb.org/t/p/w500${list[index].posterPath}'),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Text(list[index].title,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Expanded(child: Text(list[index].overview))
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
